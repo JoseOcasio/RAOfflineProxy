@@ -186,6 +186,11 @@ def detect_retroarch_cfg() -> str:
     if env_override:
         return env_override
 
+    if os.environ.get("FLATPAK_ID") == "net.retrodeck.retrodeck":
+        xdg_config_home = os.environ.get("XDG_CONFIG_HOME")
+        if xdg_config_home:
+            return str(Path(xdg_config_home) / "retroarch" / "retroarch.cfg")
+
     if DEFAULT_MUOS_RETROARCH_CFG.exists():
         return str(DEFAULT_MUOS_RETROARCH_CFG)
 
@@ -222,6 +227,13 @@ def detect_ppsspp_ini(config_data: dict) -> str | None:
     if env_override:
         return env_override
 
+    if os.environ.get("FLATPAK_ID") == "net.retrodeck.retrodeck":
+        xdg_config_home = os.environ.get("XDG_CONFIG_HOME")
+        if xdg_config_home:
+            return str(
+                Path(xdg_config_home) / "ppsspp" / "PSP" / "SYSTEM" / "ppsspp.ini"
+            )
+
     if DEFAULT_ROCKNIX_PPSSPP_INI.exists():
         return str(DEFAULT_ROCKNIX_PPSSPP_INI)
 
@@ -236,6 +248,11 @@ def detect_dolphin_config_dir(config_data: dict) -> str | None:
     env_override = os.environ.get("RAOFFLINEPROXY_DOLPHIN_CONFIG_DIR")
     if env_override:
         return env_override
+
+    if os.environ.get("FLATPAK_ID") == "net.retrodeck.retrodeck":
+        xdg_config_home = os.environ.get("XDG_CONFIG_HOME")
+        if xdg_config_home:
+            return str(Path(xdg_config_home) / "dolphin-emu")
 
     if DEFAULT_ROCKNIX_DOLPHIN_CONFIG_DIR.exists():
         return str(DEFAULT_ROCKNIX_DOLPHIN_CONFIG_DIR)
